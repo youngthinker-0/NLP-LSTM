@@ -152,7 +152,7 @@ class TextLSTM_byTorch(nn.Module):
         return model
 
 def train_lstm():
-    model = TextLSTM_byTorch()
+    model = TextLSTM_byMyself()
     model.to(device)
     print(model)
 
@@ -203,13 +203,13 @@ def train_lstm():
                   'ppl =', '{:.6}'.format(math.exp(total_loss / count_loss)))
             train_loss.append(total_loss / count_loss)
             train_ppl.append(math.exp(total_loss / count_loss))
-        with open("./train_loss1.txt", 'w') as train_los:
+        with open("./train_loss.txt", 'w') as train_los:
             train_los.write(str(train_loss))
 
-        with open("./train_ppl1.txt", 'w') as train_pp:
+        with open("./train_ppl.txt", 'w') as train_pp:
             train_pp.write(str(train_ppl))
         if (epoch + 1) % save_checkpoint_epoch == 0:
-            torch.save(model, f'models/torchmodel/lstm_model_epoch{epoch + 1}.ckpt')
+            torch.save(model, f'models/lstm_model_epoch{epoch + 1}.ckpt')
 
 
 def test_lstm(select_model_path):
@@ -234,7 +234,7 @@ def test_lstm(select_model_path):
 
 
 if __name__ == '__main__':
-    choice = 0
+    choice = 1
     n_step = 5  # number of cells(= number of Step)
     n_hidden = 5  # number of hidden units in one cell
     batch_size = 512  # batch size
@@ -260,5 +260,5 @@ if __name__ == '__main__':
         train_lstm()
     else:
         print("\nTest the LSTM……………………")
-        select_model_path = "models/lstm_model_epoch2.ckpt"
+        select_model_path = "models/lstm_model_epoch20.ckpt"
         test_lstm(select_model_path)
